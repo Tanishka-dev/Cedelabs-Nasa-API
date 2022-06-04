@@ -9,11 +9,11 @@ const ChartDisplay = ({ chartType, width, height }) => {
    const fetchData = () => {
       return axios
          .get(
-            "https://api.nasa.gov/neo/rest/v1/neo/browse?api_key=ZK2rXjOaJmcF8GYGQdgF0Xe4Jt5IwlGza8iyB1V0"
+            "https://api.nasa.gov/neo/rest/v1/neo/browse?api_key=rPbgf2JM150eQ9IeUmjpdHbVXhn2u4zSTDCtHGRa"
          )
          .then(({ data }) => {
             // handle success
-
+            console.log(data);
             return data;
          })
          .catch((err) => {
@@ -39,16 +39,22 @@ const ChartDisplay = ({ chartType, width, height }) => {
       fetchData().then((data) => {
          setEstimatedData(data.near_earth_objects);
       });
+   }, [1]);
+
+   useEffect(() => {
       displayData();
    });
+
    return (
-      <Chart
-         chartType={chartType}
-         width={width}
-         height={height}
-         data={data}
-         legendToggle
-      />
+      <>
+         <Chart
+            chartType={chartType}
+            width={width}
+            height={height}
+            data={data}
+            legendToggle
+         />
+      </>
    );
 };
 
