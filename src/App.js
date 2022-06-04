@@ -7,10 +7,9 @@ import ChartDisplay from "./ChartDisplay";
 
 function App() {
    const props = {
-      chartType: "ScatterChart",
-
-      width: "100%",
-      height: "100%",
+      chartType: "BarChart",
+      width: "100vw",
+      height: "100vh",
    };
 
    return (

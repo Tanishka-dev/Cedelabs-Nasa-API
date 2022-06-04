@@ -3,20 +3,17 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { Chart } from "react-google-charts";
 
-export const data = [
-   ["Name", "Esti. Diameter Max", "Esti. Diameter Min"],
-   ["21277", 8175000, 8008000],
-];
+export const data = [["Name", "Esti. Diameter Max", "Esti. Diameter Min"]];
 const ChartDisplay = ({ chartType, width, height }) => {
    const [estimatedData, setEstimatedData] = useState([]);
    const fetchData = () => {
       return axios
          .get(
-            "https://api.nasa.gov/neo/rest/v1/neo/browse?api_key=fOvJU5VlU4h1KQVYrvrRYIRohpITziDZa4oFkM0m"
+            "https://api.nasa.gov/neo/rest/v1/neo/browse?api_key=ZK2rXjOaJmcF8GYGQdgF0Xe4Jt5IwlGza8iyB1V0"
          )
          .then(({ data }) => {
             // handle success
-            console.log(data);
+
             return data;
          })
          .catch((err) => {
@@ -25,17 +22,31 @@ const ChartDisplay = ({ chartType, width, height }) => {
          });
    };
 
+   const displayData = () => {
+      estimatedData.map((val) => {
+         const ans = [];
+         ans.push(
+            val.name,
+            val.estimated_diameter.meters.estimated_diameter_max,
+            val.estimated_diameter.meters.estimated_diameter_min
+         );
+         data.push(ans);
+      });
+
+      return data;
+   };
    useEffect(() => {
       fetchData().then((data) => {
          setEstimatedData(data.near_earth_objects);
       });
+      displayData();
    });
    return (
       <Chart
-         chartType="BarChart"
+         chartType={chartType}
          width={width}
          height={height}
-         data={() => estimatedData.map((data) => {})}
+         data={data}
          legendToggle
       />
    );
